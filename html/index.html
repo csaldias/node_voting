@@ -1,0 +1,190 @@
+﻿<html>
+	<head>
+		<title>Conteo de votos Paralización de la #UTFSM Campus San Joaquín | CEEINF</title>
+		<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+		<script src="jquery.min.js"></script>
+		<script src="http://190.3.178.16:8080/socket.io/socket.io.js"></script>
+    	<meta property="og:title" content="Conteo de votos Paralización de la #UTFSM Campus San Joaquín" /> 
+    	<meta property="og:image" content="https://dl.dropboxusercontent.com/u/26047121/CEEINF/ceeinf_logo_cuadrado.png" /> 
+    	<meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del miércoles 10 de julio de 2013, el conteo de votos para la paralización de actividades por 5 días de la UTFSM Campus San Joaquín!" /> 
+    	<meta property="og:url" content="http://votacion.ceeinf.cl/">
+	</head>
+	<body>
+	
+		<table id="conteo-table">
+			<tr>
+				<td>
+					<table id="logo-info">
+						<tr>
+							<td id="logo">
+								<p class="big">Paralización de Actividades<br />11 de julio al 17 de julio<br />UTFSM Campus San Joaquín</p>
+							</td>
+							<td id="info">
+								<header>CONTEO DE VOTOS</header>
+								<div class="message">
+									<div id="mensaje_texto"></div> <!-- ESTADO ACTUAL: Bla bla bla... -->
+								</div>
+								<div class="bar-body">
+									<div id="barra" class="bar-inside" style="width:0%;background:red;"></div>
+								</div>
+								<div id="contando">
+									<div id="votos_texto">Conectando...</div> <!-- Quorum 30% (685/2153) -->
+								</div>
+								<div style="clear:both"></div>
+										
+								<br/><b>RESULTADO PARCIAL</b><br/><br/>
+		
+								<div id="torta" style="text-align:center;width:331px;height:141px;"> <!-- Inserte el gráfico acá. -->
+									<img id="torta_img" width="331" height="141" src="graphpastel.png"/>
+								</div>
+								<br />
+								<table style="width:100%">
+									<tr>
+										<td style="width:1px;">
+											<img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+										</td>
+										<td style="">
+											<b>PARO</b>
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="votos_paro"></div> <!-- 781 voto(s) -->
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="porcentaje_paro"></div> <!-- 88,75% -->
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<img src="/graficos/graphref.php?ref=8&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+										</td>
+										<td>
+											<b>CLASES</b>
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="votos_clases"></div> <!-- 96 voto(s) -->
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="porcentaje_clases"></div> <!-- 10,91% -->
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<img src="/graficos/graphref.php?ref=14&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+										</td>
+										<td>
+											<b>Blancos</b>
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="votos_blanco"></div> <!-- 0 voto(s) -->
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="porcentaje_blanco"></div> <!-- 0,00% -->
+										</td>
+									</tr>
+									<tr>
+										<td>
+                    						<img src="/graficos/graphref.php?ref=11&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+										</td>
+										<td>
+											<b>Nulos</b>
+										</td>
+										<td style="text-align:right;width:120px;">
+											<div id="votos_nulo"></div> <!-- 3 voto(s) -->
+										</td>
+										<td style="text-align:right;width:120px;">
+                    						<div id="porcentaje_nulo"></div> <!-- 0,34% -->
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					<footer><b><a href="http://www.ceeinf.cl/?home">Ir a la página principal de CEEINF >></a></b></footer>					
+				</td>
+			</tr>
+		</table>
+		
+	</body>
+	<script>
+			function getImage(paro, clases, nulo, blanco) {
+				var url = "http://190.3.178.16/votaciones/graficos/graphpastel.php?wdt=330&hgt=120&dat=";
+				if (paro + clases + nulo + blanco == 0) {
+					url = url + "0,0,0,0,0,1";
+				} else {
+					url = url + paro;
+					if (clases > 0) {
+						url = url + "," + clases;
+					}
+					if (blanco > 0) {
+						url = url + "," + blanco;
+					}
+					if (nulo > 0) {
+						url = url + "," + nulo;
+					}
+				}
+
+				$('#torta_img').attr("src", url);
+			}
+
+			var socket = io.connect('http://190.3.178.16:8080');
+
+			//Al conectarnos al servidor
+			socket.on('connect', function(){
+				//Llamamos a la función 'addstream' para actualizar la cuenta.
+				socket.emit('addstream', '');
+			});
+
+			// listener, cuando se actualiza el conteo de votos, esto actualiza los valores.
+			socket.on('updatecuenta', function (opcion, valor) {
+				if (opcion == 'paro') {
+					$('#votos_paro').empty();
+					$('#votos_paro').append(valor + ' voto(s)');
+				} else if (opcion == 'clases') {
+					$('#votos_clases').empty();
+					$('#votos_clases').append(valor + ' voto(s)');
+				} else if (opcion == 'nulo') {
+					$('#votos_nulo').empty();
+					$('#votos_nulo').append(valor + ' voto(s)');
+				} else {
+					$('#votos_blanco').empty();
+					$('#votos_blanco').append(valor + ' voto(s)');
+				}
+			});
+
+			socket.on('updatequorum', function (totalAlumnos, totalVotos, porcentaje) {
+				$('#votos_texto').empty();
+				$('#votos_texto').append('Quórum ' + porcentaje + '% (' + totalVotos + '/' + totalAlumnos + ')');
+
+				var style = "width:" + porcentaje + "%;";
+				if (porcentaje >= 30) {
+					style += "background:rgb(146,208,80)";
+				} else {
+					style += "background:red";
+				}
+
+				$('#barra').attr('style', style);
+			});
+
+			socket.on('updateporcentajes', function (porcentajeParo, porcentajeClases, porcentajeNulo, porcentajeBlanco) {
+				$('#porcentaje_paro').empty();
+				$('#porcentaje_clases').empty();
+				$('#porcentaje_nulo').empty();
+				$('#porcentaje_blanco').empty();
+
+				$('#porcentaje_paro').append(porcentajeParo + '%');
+				$('#porcentaje_clases').append(porcentajeClases + '%');
+				$('#porcentaje_nulo').append(porcentajeNulo + '%');
+				$('#porcentaje_blanco').append(porcentajeBlanco + '%');
+			});
+
+			socket.on('getstatus', function (estado) {
+				$('#mensaje_texto').empty();
+				$('#mensaje_texto').append('<b>ESTADO ACTUAL:</b> ' + estado);
+			});
+
+			socket.on('plot', function (voto_paro, voto_clases, voto_blanco, voto_nulo) {
+				getImage(voto_paro, voto_clases, voto_blanco, voto_nulo);
+			});
+
+		</script>
+</html>

@@ -1,0 +1,129 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400,800,600');
+
+body{
+  font-family:'Open Sans';
+}
+
+a{
+  font-size:10pt;
+  color:black;
+}
+
+#conteo-table{
+  height:100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#conteo-table td{
+  vertical-align:middle;
+}
+
+#logo-info{
+  width:920px;
+}
+
+#logo{
+  width:500px;
+  vertical-align:top;
+}
+
+#info{
+  vertical-align:top;
+  padding-left:30px;
+  width:371px;
+}
+
+header{
+  text-align:center;
+  font-size:25pt;
+  font-family:Arial;
+  font-weight:bold;
+}
+
+.message{
+  border:1px solid black;
+  background:rgb(255,255,204);
+  padding:5px;
+  font-family:Tahoma;
+  font-size:10pt;
+  margin-top:10px;
+  margin-bottom:10px;
+  
+}
+
+.bar-body{
+  width:100%;
+  height:20px;
+  border:1px solid black;
+  overflow:hidden;
+}
+
+.bar-inside{
+  height:100%;
+  background:rgb(146,208,80);
+}
+
+#cero,
+#total,
+#contando{
+  font-size:10pt;
+}
+
+#cero,
+#quorum,
+#detalle{
+  position:inline;
+  float:left;
+}
+
+#total{
+  position:inline;
+  float:right;
+}
+
+#contando{
+  position:inline;
+  float:left;
+  padding-left:130px;
+}
+
+#torta{
+  padding-top:20px;
+}
+
+#porcarrera{
+  width:100%;
+  border-collapse:collapse;
+  border:1px solid gray;
+}
+
+#porcarrera td{
+  font-size:10pt;
+  border:1px solid gray;
+}
+
+#columnas{
+  background:#CCCCCC;
+  color:black;
+  font-weight:bold;
+}
+
+#detalle{
+  padding-top:0px;
+  font-size:10pt;
+  padding-left:20px;
+}
+
+footer{
+  margin-top:20px;
+  text-align:center;
+  font-size:10pt;
+}
+
+.big{
+  font-size:40pt;
+  font-weight:800;
+  text-transform:uppercase;
+  text-align:center;
+}
