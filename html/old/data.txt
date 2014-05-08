@@ -1,1 +1,0 @@
-﻿|50|40|5|10|INF|{Apruebo|Rechazo|Nulo-Blanco|Objetado}@
