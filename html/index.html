@@ -3,10 +3,14 @@
 		<title>Conteo de votos Paralización de la #UTFSM Campus San Joaquín | CEEINF</title>
 		<link rel="stylesheet" type="text/css" media="all" href="style.css" />
 		<script src="jquery.min.js"></script>
-		<script src="http://190.3.178.16:8080/socket.io/socket.io.js"></script>
+		<script src="http://ec2.csaldias.cl:8080/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    	<script type="text/javascript">
+      		google.load('visualization', '1', {packages: ['corechart']});
+    	</script>
     	<meta property="og:title" content="Conteo de votos Paralización de la #UTFSM Campus San Joaquín" /> 
     	<meta property="og:image" content="https://dl.dropboxusercontent.com/u/26047121/CEEINF/ceeinf_logo_cuadrado.png" /> 
-    	<meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del miércoles 10 de julio de 2013, el conteo de votos para la paralización de actividades por 5 días de la UTFSM Campus San Joaquín!" /> 
+    	<meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del miércoles 7 de mayo de 2014, el conteo de votos para la paralización de actividades por el día Jueves en la UTFSM Campus San Joaquín!" /> 
     	<meta property="og:url" content="http://votacion.ceeinf.cl/">
 	</head>
 	<body>
@@ -17,7 +21,7 @@
 					<table id="logo-info">
 						<tr>
 							<td id="logo">
-								<p class="big">Paralización de Actividades<br />11 de julio al 17 de julio<br />UTFSM Campus San Joaquín</p>
+								<p class="big">Paralización de Actividades<br />Jueves 8 de Mayo<br />UTFSM Campus San Joaquín</p>
 							</td>
 							<td id="info">
 								<header>CONTEO DE VOTOS</header>
@@ -34,8 +38,8 @@
 										
 								<br/><b>RESULTADO PARCIAL</b><br/><br/>
 		
-								<div id="torta" style="text-align:center;width:331px;height:141px;"> <!-- Inserte el gráfico acá. -->
-									<img id="torta_img" width="331" height="141" src="graphpastel.png"/>
+								<div id="torta" style="text-align:center;width:400px;height:200px;"> <!-- Inserte el gráfico acá. -->
+									<img id="torta_img" width="331" height="141"/>
 								</div>
 								<br />
 								<table style="width:100%">
@@ -55,7 +59,7 @@
 									</tr>
 									<tr>
 										<td>
-											<img src="/graficos/graphref.php?ref=8&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+											<img src="/graficos/graphref.php?ref=11&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
 										</td>
 										<td>
 											<b>CLASES</b>
@@ -69,7 +73,7 @@
 									</tr>
 									<tr>
 										<td>
-											<img src="/graficos/graphref.php?ref=14&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+											<img src="/graficos/graphref.php?ref=20&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
 										</td>
 										<td>
 											<b>Blancos</b>
@@ -83,7 +87,7 @@
 									</tr>
 									<tr>
 										<td>
-                    						<img src="/graficos/graphref.php?ref=11&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    						<img src="/graficos/graphref.php?ref=8&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
 										</td>
 										<td>
 											<b>Nulos</b>
@@ -99,13 +103,38 @@
 							</td>
 						</tr>
 					</table>
-					<footer><b><a href="http://www.ceeinf.cl/?home">Ir a la página principal de CEEINF >></a></b></footer>					
+					<footer>
+						<b>Creado por <a href="https://twitter.com/camilosaldias">Camilo Saldías</a>. Idea original de <a href="https://twitter.com/alexarenasf">Alex Arenas</a>. <a href="https://github.com/csaldias/node_voting">Código fuente</a>.</b>
+						<b><a href="http://www.ceeinf.cl/?home">Ir a la página principal de CEEINF >></a></b>
+					</footer>					
 				</td>
 			</tr>
 		</table>
 		
 	</body>
 	<script>
+			function drawVisualization(paro, clases, blancos, nulos) {
+        		// Create and populate the data table.
+        		var data = google.visualization.arrayToDataTable([
+          			['Task', 'Votaciones'],
+          			['Paro', paro],
+          			['Clases', clases],
+          			['Blancos', blancos],
+          			['Nulos', nulos]
+        		]);
+      			
+        		// Create and draw the visualization.
+        		new google.visualization.PieChart(document.getElementById('torta')).draw(data, {
+        			title:"Resultados Votaciones Paralización #UTFSM",
+        			width: 400,
+        			height: 200,
+        			is3D: true
+        		});
+      		}
+
+      		google.setOnLoadCallback(drawVisualization);
+
+			/* FUNCION OBSOLETA
 			function getImage(paro, clases, nulo, blanco) {
 				var url = "http://190.3.178.16/votaciones/graficos/graphpastel.php?wdt=330&hgt=120&dat=";
 				if (paro + clases + nulo + blanco == 0) {
@@ -124,9 +153,9 @@
 				}
 
 				$('#torta_img').attr("src", url);
-			}
+			}*/
 
-			var socket = io.connect('http://190.3.178.16:8080');
+			var socket = io.connect('http://ec2.csaldias.cl:8080');
 
 			//Al conectarnos al servidor
 			socket.on('connect', function(){
@@ -183,7 +212,7 @@
 			});
 
 			socket.on('plot', function (voto_paro, voto_clases, voto_blanco, voto_nulo) {
-				getImage(voto_paro, voto_clases, voto_blanco, voto_nulo);
+				drawVisualization(voto_paro, voto_clases, voto_blanco, voto_nulo);
 			});
 
 		</script>
