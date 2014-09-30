@@ -1,116 +1,93 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="jquery.min.js"></script>
-		<script src="/socket.io/socket.io.js"></script>
-	</head>
-	<body>
-		<table>
-			<!-- <tr>
-				<td style="width:1px;"></td>
-				<td style="">
-					<b>Conexiones</b>
-				</td>
-				<td style="width:80px;font-size:20pt;">
-					<div id="conexiones">0</div>
-				</td>
-			</tr> -->
-			<tr>
-				<td style="width:1px;"></td>
-				<td style="">
-					<b>PARO</b>
-				</td>
-				<td>
-					<input value="0" type="number" id="paro" name="paro" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateParo()" />
-				</td>
-			</tr>
-			<tr>
-				<td style="width:1px;"></td>
-				<td style="">
-					<b>CLASES</b>
-				</td>
-				<td>
-					<input value="0" type="number" id="clases" name="clases" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateClases()" />
-				</td>
-			</tr>
-			<tr>
-				<td style="width:1px;"></td>
-				<td style="">
-					<b>Blanco</b>
-				</td>
-				<td>
-					<input value="0" type="number" id="blanco" name="blanco" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateBlanco()" />
-				</td>
-			</tr>
-			<tr>
-				<td style="width:1px;"></td>
-				<td style="">
-					<b>Nulo</b>
-				</td>
-				<td>
-					<input value="0" type="number" id="nulo" name="nulo" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateNulo()" />
-				</td>
-			</tr>
-			<tr>
-				<td style="width:1px;"></td>
-				<td style="">
-				</td>
-				<td>
-					<button type="button" style="font-size:15pt;" onclick="updateStatus()">Actualizar Texto</button>
-				</td>
-			</tr>
-		</table>
-		<textarea id="status" name="status" onchange="updateStatus()"></textarea>							
-	<script>
-	var socket = io.connect('http://localhost:8080');
+  <head>
+    <script src="jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>PARO</b>
+        </td>
+        <td>
+          <input value="0" type="number" id="paro" name="paro" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateParo()" />
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>CLASES</b>
+        </td>
+        <td>
+          <input value="0" type="number" id="clases" name="clases" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateClases()" />
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Blanco</b>
+        </td>
+        <td>
+          <input value="0" type="number" id="blanco" name="blanco" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateBlanco()" />
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Nulo</b>
+        </td>
+        <td>
+          <input value="0" type="number" id="nulo" name="nulo" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateNulo()" />
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+        </td>
+        <td>
+          <button type="button" style="font-size:15pt;" onclick="updateStatus()">Actualizar Texto</button>
+        </td>
+      </tr>
+    </table>
+    <textarea id="status" name="status" onchange="updateStatus()"></textarea>             
+    <script>
+      var socket = io.connect('http://localhost:8080');
 
-	//Al conectarnos al servidor
-	socket.on('connect', function(){
-		//Llamamos a la función 'addstream' para actualizar la cuenta.
-		socket.emit('addstream', '');
-	});
+      socket.on('connect', function(){
+        socket.emit('addstream');
+      });
 
-	//socket.on('updateviewers', function (conexiones) {
-	//	$('#conexiones').empty();
-	//	$('#conexiones').val(conexiones);
-	//});
+      socket.on('update_counts', function (votes) {
+        for (var choice in votes) {
+          $('#'+choice).attr('value', votes[choice]);
+        }
+      });
 
-	socket.on('updatecuenta', function (opcion, valor) {
-		if (opcion == 'paro') {
-			$('#paro').attr('value', valor);
-		} else if (opcion == 'clases') {
-			$('#clases').attr('value', valor);
-		} else if (opcion == 'nulo') {
-			$('#nulo').attr('value', valor);
-		} else {
-			$('#blanco').attr('value', valor);
-		}
-	});
+      socket.on('update_status', function (msg) {
+        $('#status').val(msg);
+      })
+      
+      function updateStatus() {
+        socket.emit('update_status', $('#status').val());
+      }
 
-	socket.on('getstatus', function (estado) {
-		$('#status').val(estado);
-	})
-	
-	function updateStatus() {
-		socket.emit('updatestatus', $('#status').val());
-	}
+      function updateParo() {
+        socket.emit('update_votes', 'paro', $('#paro').val());
+      }
 
-	function updateParo() {
-		socket.emit('updatevoto', 'paro', $('#paro').val());
-	}
+      function updateClases() {
+        socket.emit('update_votes', 'clases', $('#clases').val());
+      }
 
-	function updateClases() {
-		socket.emit('updatevoto', 'clases', $('#clases').val());
-	}
+      function updateBlanco() {
+        socket.emit('update_votes', 'blanco', $('#blanco').val());
+      }
 
-	function updateBlanco() {
-		socket.emit('updatevoto', 'blanco', $('#blanco').val());
-	}
-
-	function updateNulo() {
-		socket.emit('updatevoto', 'nulo', $('#nulo').val());
-	}
-
-</script>
-	</body>
+      function updateNulo() {
+        socket.emit('update_votes', 'nulo', $('#nulo').val());
+      }
+    </script>
+  </body>
 </html>
