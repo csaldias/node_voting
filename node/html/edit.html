@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<script src="jquery.min.js"></script>
-		<script src="http://190.3.178.16:8080/socket.io/socket.io.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
 		<table>
@@ -62,7 +62,7 @@
 		</table>
 		<textarea id="status" name="status" onchange="updateStatus()"></textarea>							
 	<script>
-	var socket = io.connect('http://190.3.178.16:8080');
+	var socket = io.connect('http://localhost:8080');
 
 	//Al conectarnos al servidor
 	socket.on('connect', function(){
