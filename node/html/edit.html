@@ -5,23 +5,41 @@
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <table>
+    <table border="1" rules="rows">
       <tr>
         <td style="width:1px;"></td>
         <td style="">
-          <b>PARO</b>
-        </td>
-        <td>
-          <input value="0" type="number" id="paro" name="paro" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateParo()" />
+          <b>Votacion 1: Paro CONFECH Miercoles</b>
         </td>
       </tr>
       <tr>
         <td style="width:1px;"></td>
         <td style="">
-          <b>CLASES</b>
+          <b>SI</b>
         </td>
         <td>
-          <input value="0" type="number" id="clases" name="clases" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateClases()" />
+          <div id="vote_1_si" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:1,si_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:1', 'si')">+1</button>
+        </td>
+        <td>
+          <button id="vote:1,si_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:1', 'si')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>NO</b>
+        </td>
+        <td>
+          <div id="vote_1_no" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:1,no_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:1', 'no')">+1</button>
+        </td>
+        <td>
+          <button id="vote:1,no_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:1', 'no')">-1</button>
         </td>
       </tr>
       <tr>
@@ -30,7 +48,13 @@
           <b>Blanco</b>
         </td>
         <td>
-          <input value="0" type="number" id="blanco" name="blanco" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateBlanco()" />
+          <div id="vote_1_blanco" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:1,blanco_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:1', 'blanco')">+1</button>
+        </td>
+        <td>
+          <button id="vote:1,blanco_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:1', 'blanco')">-1</button>
         </td>
       </tr>
       <tr>
@@ -39,7 +63,109 @@
           <b>Nulo</b>
         </td>
         <td>
-          <input value="0" type="number" id="nulo" name="nulo" min="0" style="width:80px;font-size:20pt;" value="0" onchange="updateNulo()" />
+          <div id="vote_1_nulo" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:1,nulo_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:1', 'nulo')">+1</button>
+        </td>
+        <td>
+          <button id="vote:1,nulo_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:1', 'nulo')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Votacion 2: Paro Interno UTFSM</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>SI</b>
+        </td>
+        <td>
+          <div id="vote_2_si" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:2,si_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:2', 'si')">+1</button>
+        </td>
+        <td>
+          <button id="vote:2,si_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:2', 'si')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>NO</b>
+        </td>
+        <td>
+          <div id="vote_2_no" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:2,no_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:2', 'no')">+1</button>
+        </td>
+        <td>
+          <button id="vote:2,no_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:2', 'no')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Paro Definido</b>
+        </td>
+        <td>
+          <div id="vote_2_def" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:2,def_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:2', 'def')">+1</button>
+        </td>
+        <td>
+          <button id="vote:2,def_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:2', 'def')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Paro Indefinido</b>
+        </td>
+        <td>
+          <div id="vote_2_indef" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:2,indef_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:2', 'indef')">+1</button>
+        </td>
+        <td>
+          <button id="vote:2,indef_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:2', 'indef')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Blanco</b>
+        </td>
+        <td>
+          <div id="vote_2_blancos" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:2,blanco_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:2', 'blancos')">+1</button>
+        </td>
+        <td>
+          <button id="vote:2,blanco_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:2', 'blancos')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Nulo</b>
+        </td>
+        <td>
+          <div id="vote_2_nulos" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:2,nulo_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:2', 'nulos')">+1</button>
+        </td>
+        <td>
+          <button id="vote:2,nulo_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:2', 'nulos')">-1</button>
         </td>
       </tr>
       <tr>
@@ -51,7 +177,7 @@
         </td>
       </tr>
     </table>
-    <textarea id="status" name="status" onchange="updateStatus()"></textarea>             
+    <textarea id="status_msg" name="status_msg"></textarea>             
     <script>
       var socket = io.connect('http://localhost:8080');
 
@@ -59,34 +185,31 @@
         socket.emit('addstream');
       });
 
-      socket.on('update_counts', function (votes) {
-        for (var choice in votes) {
-          $('#'+choice).attr('value', votes[choice]);
+      socket.on('update_counts', function (votes_1, votes_2) {
+        console.log("Received update")
+        for (var choice in votes_1) {
+          console.log(choice);
+          $('#vote_1_'+choice).empty();
+          $('#vote_1_'+choice).append(votes_1[choice]);
+        }
+        for (var choice in votes_2) {
+          $('#vote_2_'+choice).empty();
+          $('#vote_2_'+choice).append(votes_2[choice]);
         }
       });
 
       socket.on('update_status', function (msg) {
-        $('#status').val(msg);
+        $('#status_msg').val(msg);
       })
-      
+
+      function upvote(poll, choice) {
+        socket.emit('upvote', poll, choice);
+      }
+      function downvote(poll, choice) {
+        socket.emit('downvote', poll, choice);
+      }
       function updateStatus() {
-        socket.emit('update_status', $('#status').val());
-      }
-
-      function updateParo() {
-        socket.emit('update_votes', 'paro', $('#paro').val());
-      }
-
-      function updateClases() {
-        socket.emit('update_votes', 'clases', $('#clases').val());
-      }
-
-      function updateBlanco() {
-        socket.emit('update_votes', 'blanco', $('#blanco').val());
-      }
-
-      function updateNulo() {
-        socket.emit('update_votes', 'nulo', $('#nulo').val());
+        socket.emit('update_status', $('#status_msg').val());
       }
     </script>
   </body>

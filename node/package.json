@@ -4,7 +4,9 @@
      "version": "0.1.0",
      "dependencies": {
         "express": "3.*",
-        "socket.io": "0.*"
+        "socket.io": "*",
+        "redis": "0.*",
+        "socket.io-redis": "*"
      },
      "private": true
 }

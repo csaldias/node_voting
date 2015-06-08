@@ -3,15 +3,15 @@
     <title>Conteo de votos Paralización de la #UTFSM Campus San Joaquín | CEEINF</title>
     <link rel="stylesheet" type="text/css" media="all" href="style.css" />
     <script src="jquery.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://ec2-votaciones.csaldias.cl/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.load('visualization', '1', {packages: ['corechart']});
+      google.load('visualization', '1.0', {packages: ['corechart']});
     </script>
     <meta property="og:title" content="Conteo de votos Paralización de la #UTFSM Campus San Joaquín" /> 
     <meta property="og:image" content="" /> 
-    <meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del miércoles 7 de mayo de 2014, el conteo de votos para la paralización de actividades por el día Jueves en la UTFSM Campus San Joaquín!" /> 
-    <meta property="og:url" content="http://votacion.ceeinf.cl/">
+    <meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del martes 9 de junio de 2015, el conteo de votos para la paralización de actividades en la UTFSM Campus San Joaquín!" /> 
+    <meta property="og:url" content="http://votacion.feusam.cl/">
   </head>
   <body>
     <table id="conteo-table">
@@ -20,27 +20,27 @@
           <table id="logo-info">
             <tr>
               <td id="logo">
-                <p class="big">Paralización de Actividades<br />Jueves 8 de Mayo<br />UTFSM Campus San Joaquín</p>
+                <p class="big">Votación<br />Paralización de Actividades<br />en la UTFSM<br />Campus San Joaquín</p>
               </td>
               <td id="info">
-                <header>CONTEO DE VOTOS</header>
                 <div class="message">
                   <div id="mensaje_texto"></div> <!-- ESTADO ACTUAL: Bla bla bla... -->
                 </div>
                 <div class="bar-body">
-                  <div id="barra" class="bar-inside" style="width:0%;background:red;"></div>
+                  <div id="votos_1_barra" class="bar-inside" style="width:0%;background:red;"></div>
                 </div>
                 <div id="contando">
-                  <div id="votos_texto">Conectando...</div> <!-- Quorum 30% (685/2153) -->
+                  <div id="votos_1_texto">Conectando...</div> <!-- Quorum 30% (685/2153) -->
                 </div>
                 <div style="clear:both"></div>
-                    
-                <br/><b>RESULTADO PARCIAL</b><br/><br/>
-
-                <!-- Inserte el gráfico acá. -->
-                <div id="torta" style="text-align:center;width:400px;height:200px;"> 
-                  <img id="torta_img" width="331" height="141"/>
+                <div style="text-align:center">
+                  <br/><b>Votación 1: Paro CONFECH Miércoles</b><br/><br/>
                 </div>
+                <!-- Inserte el gráfico acá. -->
+                <div id="torta_1" style="text-align:center;width:400px;height:200px;"> 
+                  <img id="torta_1_img" width="331" height="141"/>
+                </div>
+
                 <br />
                 <table style="width:100%">
                   <tr>
@@ -48,13 +48,13 @@
                       <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
                     </td>
                     <td style="">
-                      <b>PARO</b>
+                      <b>SI</b>
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="votos_paro"></div> <!-- 781 voto(s) -->
+                      <div id="votos_1_si"></div> <!-- 781 voto(s) -->
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_paro"></div> <!-- 88,75% -->
+                      <div id="porcentaje_1_si"></div> <!-- 88,75% -->
                     </td>
                   </tr>
                   <tr>
@@ -62,13 +62,13 @@
                       <img src="/graficos/graphref.php?ref=11&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
                     </td>
                     <td>
-                      <b>CLASES</b>
+                      <b>NO</b>
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="votos_clases"></div> <!-- 96 voto(s) -->
+                      <div id="votos_1_no"></div> <!-- 96 voto(s) -->
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_clases"></div> <!-- 10,91% -->
+                      <div id="porcentaje_1_no"></div> <!-- 10,91% -->
                     </td>
                   </tr>
                   <tr>
@@ -79,10 +79,10 @@
                       <b>Blancos</b>
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="votos_blanco"></div> <!-- 0 voto(s) -->
+                      <div id="votos_1_blanco"></div> <!-- 0 voto(s) -->
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_blanco"></div> <!-- 0,00% -->
+                      <div id="porcentaje_1_blanco"></div> <!-- 0,00% -->
                     </td>
                   </tr>
                   <tr>
@@ -94,10 +94,117 @@
                       <b>Nulos</b>
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="votos_nulo"></div> <!-- 3 voto(s) -->
+                      <div id="votos_1_nulo"></div> <!-- 3 voto(s) -->
                     </td>
                     <td style="text-align:right;width:120px;">
-                                <div id="porcentaje_nulo"></div> <!-- 0,34% -->
+                      <div id="porcentaje_1_nulo"></div> <!-- 0,34% -->
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td id="info">
+                <div style="height:45px"></div>
+                <header>CONTEO DE VOTOS</header>
+                <div class="bar-body">
+                  <div id="votos_2_barra" class="bar-inside" style="width:0%;background:red;"></div>
+                </div>
+                <div id="contando">
+                  <div id="votos_2_texto">Conectando...</div> <!-- Quorum 30% (685/2153) -->
+                </div>
+                <div style="clear:both"></div>
+                <div style="text-align:center">
+                  <br/><b>Votación 2: Paro Interno</b><br/><br/>
+                </div>
+
+                <!-- Inserte el gráfico acá. -->
+                <div id="torta_2" style="text-align:center;width:400px;height:200px;"> 
+                  <img id="torta_2_img" width="331" height="141"/>
+                </div>
+                <br />
+                <table style="width:100%">
+                  <tr>
+                    <td style="width:1px;">
+                      <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td style="">
+                      <b>SI</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_2_si"></div> <!-- 781 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_2_si"></div> <!-- 88,75% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="/graficos/graphref.php?ref=11&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td>
+                      <b>NO</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_2_no"></div> <!-- 96 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_2_no"></div> <!-- 10,91% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:1px;">
+                      <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td style="">
+                      <b>Definido</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_2_def"></div> <!-- 781 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_2_def"></div> <!-- 88,75% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:1px;">
+                      <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td style="">
+                      <b>Indefinido</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_2_indef"></div> <!-- 781 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_2_indef"></div> <!-- 88,75% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="/graficos/graphref.php?ref=20&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td>
+                      <b>Blancos</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_2_blancos"></div> <!-- 0 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_2_blancos"></div> <!-- 0,00% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <!-- Puntito color -->
+                      <img src="/graficos/graphref.php?ref=8&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" />
+                    </td>
+                    <td>
+                      <b>Nulos</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_2_nulos"></div> <!-- 3 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_2_nulos"></div> <!-- 0,34% -->
                     </td>
                   </tr>
                 </table>
@@ -112,70 +219,123 @@
       </tr>
     </table>
     <script>
-      function drawVisualization(paro, clases, blancos, nulos) {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Votaciones'],
-          ['Paro', paro],
-          ['Clases', clases],
+      function drawGraph1(si, no, blancos, nulos) {
+        var data = new google.visualization.arrayToDataTable([
+          ['Task', 'Votacion Paro CONFECH'],
+          ['Si', si],
+          ['No', no],
           ['Blancos', blancos],
           ['Nulos', nulos]
         ]);
         
-        new google.visualization.PieChart(document.getElementById('torta')).draw(data, {
-          title:"Resultados Votaciones Paralización #UTFSM",
+        new google.visualization.PieChart(document.getElementById('torta_1')).draw(data, {
+          title:"La UTFSM Campus San Joaquin debe adherir al paro de la CONFECH de este Miércoles?",
           width: 400,
           height: 200,
           is3D: true
         });
       }
 
-      google.setOnLoadCallback(drawVisualization);
+      function drawGraph2(si, no, blancos, nulos) {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Votacion Paro Interno'],
+          ['Si', si],
+          ['No', no],
+          ['Blancos', blancos],
+          ['Nulos', nulos]
+        ]);
+        
+        new google.visualization.PieChart(document.getElementById('torta_2')).draw(data, {
+          title:"La UTFSM debe iniciar un paro interno?",
+          width: 400,
+          height: 200,
+          is3D: true
+        });
+      }
 
-      var socket = io.connect('http://localhost:8080');
+      google.setOnLoadCallback(drawGraph1);
+      google.setOnLoadCallback(drawGraph2);
+
+      var socket = io.connect('http://ec2-votaciones.csaldias.cl:8080');
       var metadata = {};
 
       socket.on('connect', function(){
+        //Solicitamos la actualizacion inicial de valores.
         socket.emit('addstream');
       });
 
-      function updatePercents (votes) {
-        var num_votes = 0;
+      function updatePercents (votes_1, votes_2) {
         var num_students = metadata['num_students'];
-        var vote_pc = 0;
 
-        for (var choice in votes) {
-          num_votes += votes[choice];
+        var num_votes_1 = 0;
+        var vote_pc_1 = 0;
+        var num_votes_2 = 0;
+        var vote_pc_2 = 0;
+        
+        for (var choice in votes_1) {
+          num_votes_1 += parseInt(votes_1[choice]);
         }
-        for (var choice in votes) {
-          $('#porcentaje_'+choice).empty();
-          vote_pc = ((votes[choice]*100)/num_votes).toFixed(2);
-          $('#porcentaje_'+choice).append(vote_pc+'%');
+        for (var choice in votes_1) {
+          $('#porcentaje_1_'+choice).empty();
+          vote_pc_1 = ((parseInt(votes_1[choice])*100)/num_votes_1).toFixed(2);
+          $('#porcentaje_1_'+choice).append(vote_pc_1+'%');
         }
-        var votes_percent = ((num_votes*100)/num_students).toFixed(2);
-        $('#votos_texto').empty();
-        $('#votos_texto').append(
-          'Quórum '+votes_percent+ '% ('
-          +num_votes+'/'+num_students+')');
-        var style = "width:"+votes_percent+"%;";
-        if (votes_percent >= metadata['quorum']) {
+        var votes_percent_1 = ((num_votes_1*100)/num_students).toFixed(2);
+        $('#votos_1_texto').empty();
+        $('#votos_1_texto').append(
+          'Quórum '+votes_percent_1+ '% ('
+          +num_votes_1+'/'+num_students+')');
+        var style = "width:"+votes_percent_1+"%;";
+        if (votes_percent_1 >= metadata['quorum']) {
           style += "background:rgb(146,208,80)";
         } else {
           style += "background:red";
         }
-        $('#barra').attr('style', style);
+        $('#votos_1_barra').attr('style', style);
+
+        for (var choice in votes_2) {
+          num_votes_2 += parseInt(votes_2[choice]);
+        }
+        for (var choice in votes_2) {
+          $('#porcentaje_2_'+choice).empty();
+          vote_pc_2 = ((parseInt(votes_2[choice])*100)/num_votes_2).toFixed(2);
+          $('#porcentaje_2_'+choice).append(vote_pc_2+'%');
+        }
+        var votes_percent_2 = ((num_votes_2*100)/num_students).toFixed(2);
+        $('#votos_2_texto').empty();
+        $('#votos_2_texto').append(
+          'Quórum '+votes_percent_2+ '% ('
+          +num_votes_2+'/'+num_students+')');
+        var style = "width:"+votes_percent_2+"%;";
+        if (votes_percent_2 >= metadata['quorum']) {
+          style += "background:rgb(146,208,80)";
+        } else {
+          style += "background:red";
+        }
+        $('#votos_2_barra').attr('style', style);
       }
 
-      socket.on('update_counts', function (votes) {
-        for (var choice in votes) {
-          $('#votos_'+choice).empty();
-          $('#votos_'+choice).append(votes[choice] + ' voto(s)');
+      socket.on('update_counts', function (votes_1, votes_2) {
+        for (var choice in votes_1) {
+          $('#votos_1_'+choice).empty();
+          $('#votos_1_'+choice).append(votes_1[choice] + ' voto(s)');
         }
-        updatePercents(votes);
-        drawVisualization(
-          votes['paro'],
-          votes['clases'],
-          votes['blanco'],
-          votes['nulo']
+        for (var choice in votes_2) {
+          $('#votos_2_'+choice).empty();
+          $('#votos_2_'+choice).append(votes_2[choice] + ' voto(s)');
+        }
+        updatePercents(votes_1, votes_2);
+        drawGraph1(
+          parseInt(votes_1['si']),
+          parseInt(votes_1['no']),
+          parseInt(votes_1['blanco']),
+          parseInt(votes_1['nulo'])
+        );
+        drawGraph2(
+          parseInt(votes_2['si']),
+          parseInt(votes_2['no']),
+          parseInt(votes_2['blancos']),
+          parseInt(votes_2['nulos'])
         );
       });
 
