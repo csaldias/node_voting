@@ -3,7 +3,7 @@
     <title>Conteo de votos Paralización de la #UTFSM Campus San Joaquín | CEEINF</title>
     <link rel="stylesheet" type="text/css" media="all" href="style.css" />
     <script src="jquery.min.js"></script>
-    <script src="http://ec2-votaciones.csaldias.cl/socket.io/socket.io.js"></script>
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load('visualization', '1.0', {packages: ['corechart']});
@@ -256,7 +256,7 @@
       google.setOnLoadCallback(drawGraph1);
       google.setOnLoadCallback(drawGraph2);
 
-      var socket = io.connect('http://ec2-votaciones.csaldias.cl:8080');
+      var socket = io.connect('http://localhost:8080');
       var metadata = {};
 
       socket.on('connect', function(){
@@ -271,6 +271,7 @@
         var vote_pc_1 = 0;
         var num_votes_2 = 0;
         var vote_pc_2 = 0;
+        var num_votes_paro = 0;
         
         for (var choice in votes_1) {
           num_votes_1 += parseInt(votes_1[choice]);
@@ -294,12 +295,22 @@
         $('#votos_1_barra').attr('style', style);
 
         for (var choice in votes_2) {
-          num_votes_2 += parseInt(votes_2[choice]);
+          if (choice != "def" && choice != "indef") {
+            num_votes_2 += parseInt(votes_2[choice]);
+          } else {
+            num_votes_paro += parseInt(votes_2[choice]);
+          }
         }
         for (var choice in votes_2) {
-          $('#porcentaje_2_'+choice).empty();
-          vote_pc_2 = ((parseInt(votes_2[choice])*100)/num_votes_2).toFixed(2);
-          $('#porcentaje_2_'+choice).append(vote_pc_2+'%');
+          if (choice != "def" && choice != "indef") {
+            $('#porcentaje_2_'+choice).empty();
+            vote_pc_2 = ((parseInt(votes_2[choice])*100)/num_votes_2).toFixed(2);
+            $('#porcentaje_2_'+choice).append(vote_pc_2+'%');
+          } else {
+            $('#porcentaje_2_'+choice).empty();
+            vote_pc_2 = ((parseInt(votes_2[choice])*100)/num_votes_paro).toFixed(2);
+            $('#porcentaje_2_'+choice).append(vote_pc_2+'%');
+          }
         }
         var votes_percent_2 = ((num_votes_2*100)/num_students).toFixed(2);
         $('#votos_2_texto').empty();
