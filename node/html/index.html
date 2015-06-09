@@ -19,9 +19,6 @@
         <td>
           <table id="logo-info">
             <tr>
-              <td id="logo">
-                <p class="big">Votación<br />Paralización de Actividades<br />en la UTFSM<br />Campus San Joaquín</p>
-              </td>
               <td id="info">
                 <div class="message">
                   <div id="mensaje_texto"></div> <!-- ESTADO ACTUAL: Bla bla bla... -->
@@ -103,7 +100,7 @@
                 </table>
               </td>
               <td id="info">
-                <div style="height:45px"></div>
+                <div style="height:80px"></div>
                 <header>CONTEO DE VOTOS</header>
                 <div class="bar-body">
                   <div id="votos_2_barra" class="bar-inside" style="width:0%;background:red;"></div>
@@ -209,6 +206,82 @@
                   </tr>
                 </table>
               </td>
+              <td id="info">
+                <div style="height:42px"></div>
+                <div class="bar-body">
+                  <div id="votos_3_barra" class="bar-inside" style="width:0%;background:red;"></div>
+                </div>
+                <div id="contando">
+                  <div id="votos_3_texto">Conectando...</div> <!-- Quorum 30% (685/2153) -->
+                </div>
+                <div style="clear:both"></div>
+                <div style="text-align:center">
+                  <br/><b>Votación 3: Paro Consejo Académico</b><br/><br/>
+                </div>
+                <!-- Inserte el gráfico acá. -->
+                <div id="torta_3" style="text-align:center;width:400px;height:200px;"> 
+                  <img id="torta_3_img" width="331" height="141"/>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <td style="width:1px;">
+                      <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td style="">
+                      <b>SI</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_3_si"></div> <!-- 781 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_3_si"></div> <!-- 88,75% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="/graficos/graphref.php?ref=11&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td>
+                      <b>NO</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_3_no"></div> <!-- 96 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_3_no"></div> <!-- 10,91% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="/graficos/graphref.php?ref=20&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
+                    </td>
+                    <td>
+                      <b>Blancos</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_3_blanco"></div> <!-- 0 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_3_blanco"></div> <!-- 0,00% -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <!-- Puntito color -->
+                      <img src="/graficos/graphref.php?ref=8&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" />
+                    </td>
+                    <td>
+                      <b>Nulos</b>
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="votos_3_nulo"></div> <!-- 3 voto(s) -->
+                    </td>
+                    <td style="text-align:right;width:120px;">
+                      <div id="porcentaje_3_nulo"></div> <!-- 0,34% -->
+                    </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
           </table>
           <footer>
@@ -246,7 +319,24 @@
         ]);
         
         new google.visualization.PieChart(document.getElementById('torta_2')).draw(data, {
-          title:"La UTFSM debe iniciar un paro interno?",
+          title:"La UTFSM debe iniciar un paro interno para tratar las demandas de fondo?",
+          width: 400,
+          height: 200,
+          is3D: true
+        });
+      }
+
+      function drawGraph3(si, no, blancos, nulos) {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Votacion Paro Consejo Academico'],
+          ['Si', si],
+          ['No', no],
+          ['Blancos', blancos],
+          ['Nulos', nulos]
+        ]);
+        
+        new google.visualization.PieChart(document.getElementById('torta_3')).draw(data, {
+          title:"La UTFSM debe iniciar un paro interno con motivo del CA del Lunes 15 de Junio?",
           width: 400,
           height: 200,
           is3D: true
@@ -255,6 +345,7 @@
 
       google.setOnLoadCallback(drawGraph1);
       google.setOnLoadCallback(drawGraph2);
+      google.setOnLoadCallback(drawGraph3);
 
       var socket = io.connect('http://localhost:8080');
       var metadata = {};
@@ -264,15 +355,18 @@
         socket.emit('addstream');
       });
 
-      function updatePercents (votes_1, votes_2) {
+      function updatePercents (votes_1, votes_2, votes_3) {
         var num_students = metadata['num_students'];
 
         var num_votes_1 = 0;
         var vote_pc_1 = 0;
         var num_votes_2 = 0;
         var vote_pc_2 = 0;
+        var num_votes_3 = 0;
+        var vote_pc_3 = 0;
         var num_votes_paro = 0;
         
+        //Votacion 1
         for (var choice in votes_1) {
           num_votes_1 += parseInt(votes_1[choice]);
         }
@@ -294,6 +388,7 @@
         }
         $('#votos_1_barra').attr('style', style);
 
+        //Votacion 2
         for (var choice in votes_2) {
           if (choice != "def" && choice != "indef") {
             num_votes_2 += parseInt(votes_2[choice]);
@@ -324,9 +419,31 @@
           style += "background:red";
         }
         $('#votos_2_barra').attr('style', style);
+
+        //Votacion 3
+        for (var choice in votes_3) {
+          num_votes_3 += parseInt(votes_3[choice]);
+        }
+        for (var choice in votes_3) {
+          $('#porcentaje_3_'+choice).empty();
+          vote_pc_3 = ((parseInt(votes_3[choice])*100)/num_votes_3).toFixed(2);
+          $('#porcentaje_3_'+choice).append(vote_pc_3+'%');
+        }
+        var votes_percent_3 = ((num_votes_3*100)/num_students).toFixed(2);
+        $('#votos_3_texto').empty();
+        $('#votos_3_texto').append(
+          'Quórum '+votes_percent_3+ '% ('
+          +num_votes_3+'/'+num_students+')');
+        var style = "width:"+votes_percent_3+"%;";
+        if (votes_percent_3 >= metadata['quorum']) {
+          style += "background:rgb(146,208,80)";
+        } else {
+          style += "background:red";
+        }
+        $('#votos_3_barra').attr('style', style);
       }
 
-      socket.on('update_counts', function (votes_1, votes_2) {
+      socket.on('update_counts', function (votes_1, votes_2, votes_3) {
         for (var choice in votes_1) {
           $('#votos_1_'+choice).empty();
           $('#votos_1_'+choice).append(votes_1[choice] + ' voto(s)');
@@ -335,7 +452,11 @@
           $('#votos_2_'+choice).empty();
           $('#votos_2_'+choice).append(votes_2[choice] + ' voto(s)');
         }
-        updatePercents(votes_1, votes_2);
+        for (var choice in votes_3) {
+          $('#votos_3_'+choice).empty();
+          $('#votos_3_'+choice).append(votes_3[choice] + ' voto(s)');
+        }
+        updatePercents(votes_1, votes_2, votes_3);
         drawGraph1(
           parseInt(votes_1['si']),
           parseInt(votes_1['no']),
@@ -347,6 +468,12 @@
           parseInt(votes_2['no']),
           parseInt(votes_2['blancos']),
           parseInt(votes_2['nulos'])
+        );
+        drawGraph3(
+          parseInt(votes_3['si']),
+          parseInt(votes_3['no']),
+          parseInt(votes_3['blanco']),
+          parseInt(votes_3['nulo'])
         );
       });
 

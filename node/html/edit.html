@@ -171,6 +171,72 @@
       <tr>
         <td style="width:1px;"></td>
         <td style="">
+          <b>Votacion 3: Paro Interno Consejo Academico</b>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>SI</b>
+        </td>
+        <td>
+          <div id="vote_3_si" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:3,si_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:3', 'si')">+1</button>
+        </td>
+        <td>
+          <button id="vote:3,si_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:3', 'si')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>NO</b>
+        </td>
+        <td>
+          <div id="vote_3_no" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:3,no_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:3', 'no')">+1</button>
+        </td>
+        <td>
+          <button id="vote:3,no_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:3', 'no')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Blanco</b>
+        </td>
+        <td>
+          <div id="vote_3_blanco" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:3,blanco_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:3', 'blanco')">+1</button>
+        </td>
+        <td>
+          <button id="vote:3,blanco_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:3', 'blanco')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
+          <b>Nulo</b>
+        </td>
+        <td>
+          <div id="vote_3_nulo" style="width:40px;font-size:20pt;">0</div>
+        </td>
+        <td>
+          <button id="vote:3,nulo_upvote" style="width:40px;font-size:20pt;" onclick="upvote('votes:3', 'nulo')">+1</button>
+        </td>
+        <td>
+          <button id="vote:3,nulo_downvote" style="width:40px;font-size:20pt;" onclick="downvote('votes:3', 'nulo')">-1</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="width:1px;"></td>
+        <td style="">
         </td>
         <td>
           <button type="button" style="font-size:15pt;" onclick="updateStatus()">Actualizar Texto</button>
@@ -185,16 +251,20 @@
         socket.emit('addstream');
       });
 
-      socket.on('update_counts', function (votes_1, votes_2) {
+      socket.on('update_counts', function (votes_1, votes_2, votes_3) {
         console.log("Received update")
         for (var choice in votes_1) {
-          console.log(choice);
           $('#vote_1_'+choice).empty();
           $('#vote_1_'+choice).append(votes_1[choice]);
         }
         for (var choice in votes_2) {
           $('#vote_2_'+choice).empty();
           $('#vote_2_'+choice).append(votes_2[choice]);
+        }
+        for (var choice in votes_3) {
+          console.log(choice);
+          $('#vote_3_'+choice).empty();
+          $('#vote_3_'+choice).append(votes_3[choice]);
         }
       });
 

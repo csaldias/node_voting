@@ -24,6 +24,7 @@ metadata['quorum'] = 30;
 function resetCounts() {
   //votes:1 -> Votacion paralizacion CONFECH Miercoles
   //votes:2 -> Votacion paralizacion interna, y forma de paralizacion
+  //votes:3 -> Votacion paro Consejo Academico
   //msg     -> Mensaje de estado
 
   //Creamos votes:1 en la BD si no existe.
@@ -43,6 +44,16 @@ function resetCounts() {
     } else {
       console.log('Creating DB votes:2 ...');
       db_client.hmset('votes:2', 'si', 0, 'no', 0, 'nulos', 0, 'blancos', 0, 'def', 0, 'indef', 0);
+    }
+  });
+
+  //Creamos votes:3 en la BD si no existe.
+  db_client.exists('votes:3', function (err, reply) {
+    if (reply == 1) {
+      console.log('votes:3 already exists.');
+    } else {
+      console.log('Creating DB votes:3 ...');
+      db_client.hmset('votes:2', 'si', 0, 'no', 0, 'nulo', 0, 'blanco', 0, 'def', 0, 'indef', 0);
     }
   });
 
@@ -69,7 +80,9 @@ io.sockets.on('connection', function (socket) {
     //Obtenemos los resultados de la primera votacion
     db_client.hgetall("votes:1", function (err_1, votes_1) {
       db_client.hgetall("votes:2", function (err_1, votes_2) {
-        io.sockets.emit('update_counts', votes_1, votes_2);
+      	db_client.hgetall("votes:3", function (err_1, votes_3) {
+          io.sockets.emit('update_counts', votes_1, votes_2, votes_3);
+        });
       });
     });
   });
@@ -82,7 +95,9 @@ io.sockets.on('connection', function (socket) {
     //Obtenemos los resultados de la primera votacion
     db_client.hgetall("votes:1", function (err_1, votes_1) {
       db_client.hgetall("votes:2", function (err_1, votes_2) {
-        io.sockets.emit('update_counts', votes_1, votes_2);
+      	db_client.hgetall("votes:3", function (err_1, votes_3) {
+          io.sockets.emit('update_counts', votes_1, votes_2, votes_3);
+        });
       });
     });
   });
@@ -106,7 +121,9 @@ io.sockets.on('connection', function (socket) {
     //Obtenemos los resultados de la primera votacion
     db_client.hgetall("votes:1", function (err_1, votes_1) {
       db_client.hgetall("votes:2", function (err_1, votes_2) {
-        socket.emit('update_counts', votes_1, votes_2);
+      	db_client.hgetall("votes:3", function (err_1, votes_3) {
+          io.sockets.emit('update_counts', votes_1, votes_2, votes_3);
+        });
       });
     });
 
