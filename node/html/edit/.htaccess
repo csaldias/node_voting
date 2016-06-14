@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Acceso Restringido"
+AuthUserFile /home/feusam/votacion.feusam.cl/.htpasswd
+Require valid-user

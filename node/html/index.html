@@ -10,7 +10,7 @@
     </script>
     <meta property="og:title" content="Conteo de votos Paralización de la #UTFSM Campus San Joaquín" /> 
     <meta property="og:image" content="" /> 
-    <meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del martes 9 de junio de 2015, el conteo de votos para la paralización de actividades en la UTFSM Campus San Joaquín!" /> 
+    <meta property="og:description" content="¡Sigue en directo, desde las 17:00 hrs del miércoles 20 de abril de 2016, el conteo de votos para la paralización de actividades en la UTFSM Campus San Joaquín!" /> 
     <meta property="og:url" content="http://votacion.feusam.cl/">
   </head>
   <body>
@@ -31,7 +31,7 @@
                 </div>
                 <div style="clear:both"></div>
                 <div style="text-align:center">
-                  <br/><b>Votación 1: Paro CONFECH Miércoles</b><br/><br/>
+                  <br/><b>Votación 1: Paro CONFECH Jueves</b><br/><br/>
                 </div>
                 <!-- Inserte el gráfico acá. -->
                 <div id="torta_1" style="text-align:center;width:400px;height:200px;"> 
@@ -110,7 +110,7 @@
                 </div>
                 <div style="clear:both"></div>
                 <div style="text-align:center">
-                  <br/><b>Votación 2: Paro Interno</b><br/><br/>
+                  <br/><b>Votación 2: Vocería CONFECH CRUCH</b><br/><br/>
                 </div>
 
                 <!-- Inserte el gráfico acá. -->
@@ -145,34 +145,6 @@
                     </td>
                     <td style="text-align:right;width:120px;">
                       <div id="porcentaje_2_no"></div> <!-- 10,91% -->
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width:1px;">
-                      <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
-                    </td>
-                    <td style="">
-                      <b>Definido</b>
-                    </td>
-                    <td style="text-align:right;width:120px;">
-                      <div id="votos_2_def"></div> <!-- 781 voto(s) -->
-                    </td>
-                    <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_2_def"></div> <!-- 88,75% -->
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width:1px;">
-                      <img src="/graficos/graphref.php?ref=5&typ=1&dim=5&bkg=FFFFFF" width="11" height="11" /> <!-- Puntito color -->
-                    </td>
-                    <td style="">
-                      <b>Indefinido</b>
-                    </td>
-                    <td style="text-align:right;width:120px;">
-                      <div id="votos_2_indef"></div> <!-- 781 voto(s) -->
-                    </td>
-                    <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_2_indef"></div> <!-- 88,75% -->
                     </td>
                   </tr>
                   <tr>
@@ -216,7 +188,7 @@
                 </div>
                 <div style="clear:both"></div>
                 <div style="text-align:center">
-                  <br/><b>Votación 3: Paro Consejo Académico</b><br/><br/>
+                  <br/><b>Votación 3: Vocería CONFECH Privadas</b><br/><br/>
                 </div>
                 <!-- Inserte el gráfico acá. -->
                 <div id="torta_3" style="text-align:center;width:400px;height:200px;"> 
@@ -259,10 +231,10 @@
                       <b>Blancos</b>
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="votos_3_blanco"></div> <!-- 0 voto(s) -->
+                      <div id="votos_3_blancos"></div> <!-- 0 voto(s) -->
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_3_blanco"></div> <!-- 0,00% -->
+                      <div id="porcentaje_3_blancos"></div> <!-- 0,00% -->
                     </td>
                   </tr>
                   <tr>
@@ -274,10 +246,10 @@
                       <b>Nulos</b>
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="votos_3_nulo"></div> <!-- 3 voto(s) -->
+                      <div id="votos_3_nulos"></div> <!-- 3 voto(s) -->
                     </td>
                     <td style="text-align:right;width:120px;">
-                      <div id="porcentaje_3_nulo"></div> <!-- 0,34% -->
+                      <div id="porcentaje_3_nulos"></div> <!-- 0,34% -->
                     </td>
                   </tr>
                 </table>
@@ -460,8 +432,8 @@
         drawGraph1(
           parseInt(votes_1['si']),
           parseInt(votes_1['no']),
-          parseInt(votes_1['blanco']),
-          parseInt(votes_1['nulo'])
+          parseInt(votes_1['blancos']),
+          parseInt(votes_1['nulos'])
         );
         drawGraph2(
           parseInt(votes_2['si']),
@@ -472,8 +444,8 @@
         drawGraph3(
           parseInt(votes_3['si']),
           parseInt(votes_3['no']),
-          parseInt(votes_3['blanco']),
-          parseInt(votes_3['nulo'])
+          parseInt(votes_3['blancos']),
+          parseInt(votes_3['nulos'])
         );
       });
 
